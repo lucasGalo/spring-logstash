@@ -1,23 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- Appender para enviar logs ao Logstash via TCP -->
+
+    <!-- Appender para Logstash via TCP -->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <!-- Endereço do Logstash (service no Kubernetes) -->
+        <!-- Endereço do Logstash (service no Kubernetes ou IP) -->
         <destination>logstash:5044</destination>
 
         <!-- Encoder que transforma os logs em JSON -->
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
-    </appender>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!-- Campos fixos vindos do application.yml -->
+            <customFields>{"app_name":"${spring.application.name}","app_version":"${app.version}","environment":"${spring.profiles.active}"}</customFields>
 
-    <!-- Console padrão para debug local -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+            <!-- Incluir campos dinâmicos via MDC -->
+            <includeMdcKeyName>X-Request-ID</includeMdcKeyName>
+            <includeMdcKeyName>userId</includeMdcKeyName>
         </encoder>
     </appender>
 
-    <!-- Root logger -->
+    <!-- Appender para Console em JSON -->
+    <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"app_name":"${spring.application.name}","app_version":"${app.version}","environment":"${spring.profiles.active}"}</customFields>
+        </encoder>
+    </appender>
+
+    <!-- Logger raiz -->
     <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="LOGSTASH" />
+        <appender-ref ref="LOGSTASH"/>
+        <appender-ref ref="JSON_CONSOLE"/>
     </root>
+
+    <!-- Loggers específicos para Hibernate -->
+    <logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+        <appender-ref ref="LOGSTASH"/>
+        <appender-ref ref="JSON_CONSOLE"/>
+    </logger>
+
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
+        <appender-ref ref="LOGSTASH"/>
+        <appender-ref ref="JSON_CONSOLE"/>
+    </logger>
+
 </configuration>

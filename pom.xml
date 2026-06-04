@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.galo</groupId>
     <artifactId>spring-logstash</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.1</version>
     <name>spring-logstash</name>
     <description>spring-logstash</description>
     <url/>
@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <app.version>${project.version}</app.version>
     </properties>
     <dependencies>
         <!-- API REST -->

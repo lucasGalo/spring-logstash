@@ -1,6 +1,10 @@
 spring:
   application:
-    name: spring-logstash
+    name: ${app.name}
+  profiles:
+    active: default
+app:
+  version: ${app.version}
 
 server:
   port: 8484
@@ -18,5 +22,9 @@ management:
         enabled: true
 
 logging:
+  logging:
+    logback:
+      customFields: '{"app_name":"${spring.application.name}","app_version":"${app.version}","environment":"${spring.profiles.active}"}'
+
   level:
     root: INFO
