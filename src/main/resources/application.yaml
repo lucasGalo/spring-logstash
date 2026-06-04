@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: spring-logstash
+
+server:
+  port: 8484
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "health", "prometheus" ]
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    export:
+      prometheus:
+        enabled: true
+
+logging:
+  level:
+    root: INFO

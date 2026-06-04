@@ -1,0 +1,23 @@
+<configuration>
+    <!-- Appender para enviar logs ao Logstash via TCP -->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <!-- Endereço do Logstash (service no Kubernetes) -->
+        <destination>logstash:5044</destination>
+
+        <!-- Encoder que transforma os logs em JSON -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+
+    <!-- Console padrão para debug local -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOGSTASH" />
+    </root>
+</configuration>
