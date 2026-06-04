@@ -4,15 +4,15 @@
 
 1. **Deletar imagens antigas**
     ```bash
-        docker rmi spring-logstash:0.1.1
+        docker rmi spring-logstash:0.1.2
     ``` 
 2. **Build do projeto**
     ```bash
-   docker build -t spring-logstash:0.1.1 -f docker/Dockerfile .   
+   docker build -t spring-logstash:0.1.2 -f docker/Dockerfile .   
    ``` 
 3. **Tag do build**
    ```bash
-        docker tag 1e1ca1d2746b lucasgalo/spring-logstash:0.1.1
+        docker tag 1e1ca1d2746b lucasgalo/spring-logstash:0.1.2
    ```
 4. **Login dockerhub**
    ```bash
@@ -20,5 +20,5 @@
    ```
 5. **Push da tag**
     ```bash
-        docker push lucasgalo/spring-logstash:0.1.1
+        docker push lucasgalo/spring-logstash:0.1.2
     ```

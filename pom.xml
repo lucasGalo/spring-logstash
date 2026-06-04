@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.galo</groupId>
     <artifactId>spring-logstash</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2</version>
     <name>spring-logstash</name>
     <description>spring-logstash</description>
     <url/>

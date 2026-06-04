@@ -9,7 +9,8 @@
         <!-- Encoder que transforma os logs em JSON -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <!-- Campos fixos vindos do application.yml -->
-            <customFields>{"app_name":"${spring.application.name}","app_version":"${app.version}","environment":"${spring.profiles.active}"}</customFields>
+<!--            <customFields>{"app_name":"${spring.application.name}","app_version":"${app.version}","environment":"${spring.profiles.active}"}</customFields>-->
+            <customFields>{"app_name":"${spring.application.name}"}</customFields>
 
             <!-- Incluir campos dinâmicos via MDC -->
             <includeMdcKeyName>X-Request-ID</includeMdcKeyName>
@@ -20,7 +21,9 @@
     <!-- Appender para Console em JSON -->
     <appender name="JSON_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"app_name":"${spring.application.name}","app_version":"${app.version}","environment":"${spring.profiles.active}"}</customFields>
+<!--            <customFields>{"app_name":"${spring.application.name}","app_version":"${app.version}","environment":"${spring.profiles.active}"}</customFields>-->
+
+            <customFields>{"app_name":"${spring.application.name}"}</customFields>
         </encoder>
     </appender>
 
